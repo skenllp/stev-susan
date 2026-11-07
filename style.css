@@ -1,0 +1,167 @@
+:root{
+  --cream:#fbf9f4;
+  --ink:#3b3426;
+  --olive:#6b6a4d;
+  --sand:#d6cfb9;
+  --taupe:#b9b0a4;
+  --brown:#5b4636;
+  --grey:#dedcd6;
+  --display:'Italiana','Cormorant Garamond',serif;
+  --serif:'Cormorant Garamond',serif;
+  --sans:'Poppins',sans-serif;
+  --script:'Allura','Mr De Haviland',cursive;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#323c50;font-family:var(--serif);color:var(--ink);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+.page{max-width:480px;margin:0 auto;background:var(--cream);overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,.4)}
+
+/* paper texture */
+.paper{
+  position:relative;padding:48px 22px;text-align:center;
+  background-color:var(--cream);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.035' numOctaves='4' seed='4'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .52  0 0 0 0 .46  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.display{font-family:var(--display);font-weight:400;letter-spacing:.04em;text-transform:uppercase;color:var(--olive);line-height:1.15}
+.display.big{font-size:clamp(40px,12vw,58px)}
+.display small{font-size:.45em;vertical-align:middle;margin:0 .1em}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 1s ease,transform 1s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* HERO */
+.hero{position:relative;min-height:100svh;color:#f3eee4;display:flex;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:#222 center/cover no-repeat;filter:grayscale(1) sepia(.35) brightness(.7) contrast(1.05);transform:scale(1.05);animation:slow 18s ease-in-out infinite alternate}
+@keyframes slow{to{transform:scale(1.14)}}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.1) 40%,rgba(0,0,0,.55))}
+.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%;padding:34px 26px 48px}
+.wreath{width:140px;height:140px}
+.wreath svg{width:100%;height:100%;overflow:visible}
+.wreath.light{color:#f3eee4}
+.wreath.dark{color:#8a7a68;width:150px;height:150px;margin:20px auto 30px}
+.the-wedding-of{display:flex;align-items:center;gap:10px;width:100%;margin-top:34px;font-family:var(--sans);font-size:12px;letter-spacing:.06em}
+.the-wedding-of span{flex:1;height:1px;background:rgba(255,255,255,.8)}
+.hero-names{margin-top:auto;font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:1.05;display:flex;flex-direction:column;align-items:center;font-size:clamp(46px,14vw,66px);letter-spacing:.03em;color:#eee8dc}
+.hero-names em{font-style:normal;font-size:.8em;line-height:1.1}
+.hero-date{margin-top:34px;font-family:var(--serif);font-weight:600;letter-spacing:.12em;font-size:15px}
+
+/* PLAYER */
+.intro{padding-top:20px}
+.player{position:relative;display:inline-flex;align-items:center;background:none;border:0;cursor:pointer;width:230px;height:130px;justify-content:center}
+.player-photo{position:relative;z-index:2;width:112px;height:112px;border:5px solid #c8bca2;background:#c8bca2;box-shadow:0 4px 14px rgba(0,0,0,.2);margin-right:-18px}
+.player-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(.75)}
+.note{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;font-size:60px;color:#f0dfa8;text-shadow:0 0 18px #f6e7b0,0 0 4px #fff;transition:opacity .3s}
+.player.playing .note{opacity:.35}
+.vinyl{position:relative;z-index:1;width:112px;height:112px;border-radius:50%;background:radial-gradient(circle,#777 0 2px,#111 3px 18%,#1c1c1c 19% 40%,#0c0c0c 41% 62%,#222 63% 64%,#0a0a0a 65%);box-shadow:0 4px 12px rgba(0,0,0,.35)}
+.vinyl.spin{animation:spin 4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.click-play{font-size:13px;letter-spacing:.08em;color:var(--brown);margin:6px 0 26px}
+.click-play span{font-size:16px}
+
+/* DEAR FAMILY FRAME */
+.frame{position:relative;margin:0 auto;padding:46px 26px 42px;border:3px solid #e6e3dc;border-radius:34px;box-shadow:inset 0 0 0 7px var(--cream),inset 0 0 0 9px #e3e0d9,0 2px 6px rgba(0,0,0,.08)}
+.frame .display{font-size:clamp(34px,10.5vw,46px);color:#6f6c50}
+.heart-swirl{width:130px;margin:18px auto 22px;color:#7d7960;display:block}
+.poppins,.frame p{font-family:var(--sans);font-weight:300;font-size:13.5px;line-height:1.75;letter-spacing:.04em;color:#5a4f39}
+
+/* CALENDAR */
+.wedding-label{font-size:clamp(38px,11vw,52px);margin:24px 0 24px}
+.calendar{position:relative;width:min(330px,86%);margin:0 auto;background:var(--sand);border-radius:26px;padding:26px 22px 22px;box-shadow:0 12px 26px rgba(80,70,50,.22)}
+.clip{position:absolute;right:-6px;top:-14px;width:18px;height:40px;border:2px solid #a89c7f;border-radius:10px;transform:rotate(28deg)}
+.clip::after{content:"";position:absolute;left:3px;top:6px;width:8px;height:28px;border:2px solid #a89c7f;border-radius:8px}
+.cal-title{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:22px;letter-spacing:.06em;color:#6c6347;margin-bottom:14px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);row-gap:11px;font-family:var(--sans);font-size:12px;color:#4c3f2c}
+.cal-grid .dow{font-size:11px;font-weight:400;color:#6a5f45}
+.cal-grid .day{position:relative;height:22px;line-height:22px}
+.cal-grid .day.mark{font-weight:600}
+.cal-grid .day.mark svg{position:absolute;left:50%;top:50%;width:40px;height:36px;transform:translate(-50%,-50%) rotate(-8deg);color:#5b4d34;overflow:visible}
+
+/* COUNTDOWN */
+.countdown{display:flex;justify-content:center;align-items:flex-start;gap:6px;margin:26px 0 38px;font-family:'Times New Roman',serif;color:#111}
+.countdown b{display:block;font-weight:400;font-size:30px;line-height:1.1}
+.countdown i{font-style:normal;font-size:30px;line-height:1.1}
+.countdown small{display:block;font-size:8px;letter-spacing:.06em;margin-top:2px}
+.countdown div{min-width:44px}
+
+/* INVITATION TEXT */
+.verse{font-family:'Kristi',cursive;font-size:17px;line-height:1.5;color:#6b4a3a;margin-bottom:26px}
+.invite-text{line-height:1.5}
+.caps{text-transform:uppercase;font-size:14px;letter-spacing:.02em;margin:0 8px 20px;color:#3b3426}
+.caps.spaced{margin-top:26px;margin-bottom:12px}
+.script-name{font-family:var(--script);font-size:34px;color:#111;margin:8px 0 14px;line-height:1.2}
+.script-name.large{font-size:46px;margin:14px 0 4px}
+.parents{font-size:15px;margin-bottom:8px}
+.parents.plain{font-size:16px;margin-bottom:16px;font-weight:400}
+.small{font-size:13.5px;margin:0 8px 16px;color:#40372a}
+.with{font-family:var(--script);font-size:30px;margin:18px 0 6px;color:#111}
+.on,.at{font-family:var(--script);font-size:26px;margin:8px 0 8px;color:#111}
+.datebox{width:min(300px,90%);margin:12px auto 6px}
+.datebox .month{font-size:17px;letter-spacing:.04em;margin-bottom:8px}
+.date-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;column-gap:12px}
+.date-row span{font-size:15px;padding:5px 0;border-top:1px solid #9d9187;border-bottom:1px solid #9d9187;white-space:nowrap}
+.date-row strong{font-family:var(--display);font-weight:400;font-size:44px;line-height:1}
+.datebox .year{font-size:30px;margin-top:8px}
+.venue{font-size:16px;margin:18px 10px 0}
+.map-btn{display:inline-block;margin-top:16px;padding:6px 14px;background:#c9c1b5;border-radius:6px;font-size:12.5px;font-weight:700;color:#3b3426;text-decoration:none;transition:transform .2s,background .2s}
+.map-btn:hover{background:#bcb3a5;transform:translateY(-2px)}
+
+/* TORN PHOTOS */
+.torn{margin:44px -22px 0;line-height:0}
+.torn img{width:100%;aspect-ratio:4/3;object-fit:cover;filter:grayscale(1) contrast(1.02)}
+.torn.wide img{aspect-ratio:1/1.05}
+.torn.photo{background:#fff}
+
+.reception{padding-top:20px}
+.reception .display.big{margin-bottom:28px}
+
+/* RSVP */
+.rsvp{padding-top:26px}
+.rsvp-head{position:relative;margin-bottom:26px}
+.rsvp-head .display{position:relative;z-index:1}
+.blob{position:absolute;width:56px;height:70px;background:#c5a58c;opacity:.85;border-radius:60% 40% 55% 45%}
+.blob.b1{left:12px;top:-20px;border-radius:0 0 60% 20%}
+.blob.b2{right:6px;top:30px;width:34px;height:40px;border-radius:50%;background:#b98d6c}
+.tiny-caps{font-family:var(--sans);font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;margin-top:6px;color:#4a4132}
+.tiny-caps.light{color:#8c8472;margin-top:2px}
+.rsvp-form{text-align:left;width:min(350px,100%);margin:0 auto}
+.lbl{display:block;font-size:14.5px;font-weight:600;margin:18px 0 8px;color:#2a241a}
+.rsvp-form input[type=text],.rsvp-form input[type=number]{width:100%;height:40px;border:1.5px solid #cfcac1;border-radius:6px;background:#fff;padding:0 12px;font:500 16px var(--serif);outline:none;transition:border-color .2s,box-shadow .2s}
+.rsvp-form input:focus{border-color:#8f836d;box-shadow:0 0 0 3px rgba(143,131,109,.2)}
+.choices{display:grid;gap:8px}
+.choice{position:relative;display:block;cursor:pointer}
+.choice input{position:absolute;opacity:0}
+.choice span{display:block;padding:11px 12px;background:var(--grey);border-radius:6px;font-size:15px;transition:background .2s,color .2s}
+.choice:hover span{background:#d3d0c8}
+.choice input:checked+span{background:#8b8266;color:#fff}
+.choice input:focus-visible+span{outline:2px solid #5b4636}
+.submit{width:100%;height:42px;margin-top:20px;background:#c3bdb2;border:0;border-radius:6px;font:600 16px var(--serif);color:#2c261b;cursor:pointer;transition:background .2s,transform .15s}
+.submit:hover{background:#b3ac9f}
+.submit:active{transform:scale(.98)}
+.fine{font-size:9px;text-align:center;color:#8a8478;margin-top:8px}
+.status{text-align:center;font-size:15px;margin-top:12px;min-height:20px;color:#5b4636}
+.status.err{color:#a23b2a}
+input.invalid{border-color:#a23b2a!important}
+
+/* BLESSINGS */
+.blessings{position:relative;min-height:430px;overflow:hidden;display:flex;align-items:center}
+.blessings-bg{position:absolute;inset:0;background:center/cover no-repeat;filter:sepia(.35) brightness(1.08) saturate(.8)}
+.blessings-veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(235,229,220,.92) 0,rgba(235,229,220,.8) 45%,rgba(235,229,220,.1) 100%)}
+.blessings-text{position:relative;z-index:2;width:62%;padding:36px 0 36px 22px;text-align:center}
+.blessings-text .display{font-size:21px;text-align:left;margin-bottom:16px;color:#7b7660}
+.blessings-text p{font-family:var(--sans);font-weight:300;font-size:10.5px;line-height:1.8;letter-spacing:.07em;color:#5a5240;margin-bottom:14px}
+
+/* THANKS */
+.thanks{padding:50px 0 0}
+.thank-script{font-family:var(--script);font-weight:400;font-size:clamp(50px,15vw,68px);color:#76744f}
+.thanks .torn{margin:0}
+.sharing{padding:16px 10px;background:#eadfd3;font-family:'Kristi',cursive;font-size:19px;color:#5b4636}
+
+@media (min-width:600px){body{padding:24px 0}}
+@media (prefers-reduced-motion:reduce){.hero-bg,.vinyl.spin{animation:none}.reveal{opacity:1;transform:none;transition:none}}
+.hero-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;line-height:1.4;max-width:300px;margin:0 auto 14px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.gallery{display:flex;flex-direction:column;gap:22px}
+.sharing p{margin:4px 0;line-height:1.5}
+.sharing .sharing-title{font-size:23px}
