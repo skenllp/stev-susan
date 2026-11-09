@@ -6,6 +6,142 @@ const CONFIG = {
   endpoint: ''
 };
 
+/* ===== OPENING COVER VIDEO & GHOST TRANSITION ===== */
+const openingCover = document.getElementById('openingCover');
+const openingVideo = document.getElementById('openingVideo');
+const openingSoundBtn = document.getElementById('openingSoundBtn');
+const openingSkipBtn = document.getElementById('openingSkipBtn');
+const heroReplayBtn = document.getElementById('heroReplayBtn');
+const heroSection = document.getElementById('hero');
+
+if (openingCover && openingVideo) {
+  let isGhosted = false;
+  let audioFadeTimer = null;
+
+  // Add scroll-lock while cover is active
+  document.body.classList.add('cover-active');
+
+  function ghostToHero() {
+    if (isGhosted) return;
+    isGhosted = true;
+
+    // Smoothly fade out video audio if playing
+    if (!openingVideo.muted && openingVideo.volume > 0) {
+      if (audioFadeTimer) clearInterval(audioFadeTimer);
+      audioFadeTimer = setInterval(() => {
+        if (openingVideo.volume > 0.08) {
+          openingVideo.volume = Math.max(0, openingVideo.volume - 0.08);
+        } else {
+          openingVideo.volume = 0;
+          clearInterval(audioFadeTimer);
+        }
+      }, 80);
+    }
+
+    // Reveal hero underneath
+    if (heroSection) heroSection.classList.add('hero-revealed');
+
+    // Trigger ghost dissolve
+    openingCover.classList.add('ghost-out');
+    document.body.classList.remove('cover-active');
+
+    // Remove window event listeners
+    window.removeEventListener('wheel', onEarlyWheel);
+    window.removeEventListener('keydown', onEarlyKey);
+
+    // After CSS transition finishes, hide & pause video
+    setTimeout(() => {
+      openingCover.classList.add('is-hidden');
+      try { openingVideo.pause(); } catch (_) {}
+    }, 1800);
+  }
+
+  function replayOpening() {
+    isGhosted = false;
+    if (audioFadeTimer) clearInterval(audioFadeTimer);
+    openingCover.classList.remove('is-hidden', 'ghost-out');
+    if (heroSection) heroSection.classList.remove('hero-revealed');
+    document.body.classList.add('cover-active');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    openingVideo.currentTime = 0;
+    openingVideo.volume = 1;
+    const playPromise = openingVideo.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+
+    window.addEventListener('wheel', onEarlyWheel, { passive: true });
+    window.addEventListener('keydown', onEarlyKey);
+  }
+
+  // Automatic ghost transition when video reaches unfolding completion (~6.3s) or finishes
+  openingVideo.addEventListener('timeupdate', () => {
+    if (openingVideo.currentTime >= 6.3) {
+      ghostToHero();
+    }
+  });
+
+  openingVideo.addEventListener('ended', ghostToHero);
+
+  // Sound toggle button
+  if (openingSoundBtn) {
+    openingSoundBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      openingVideo.muted = !openingVideo.muted;
+      openingSoundBtn.classList.toggle('is-muted', openingVideo.muted);
+      if (!openingVideo.muted) {
+        openingVideo.volume = 1;
+      }
+    });
+  }
+
+  // Skip button
+  if (openingSkipBtn) {
+    openingSkipBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      ghostToHero();
+    });
+  }
+
+  // Tap anywhere on cover to ghost to hero
+  openingCover.addEventListener('click', () => {
+    ghostToHero();
+  });
+
+  // Replay button on hero
+  if (heroReplayBtn) {
+    heroReplayBtn.addEventListener('click', () => {
+      replayOpening();
+    });
+  }
+
+  // Early wheel or keyboard interaction ghosts to hero
+  function onEarlyWheel(e) {
+    if (e.deltaY > 10) ghostToHero();
+  }
+  function onEarlyKey(e) {
+    if (['Space', 'ArrowDown', 'PageDown', 'Enter'].includes(e.code)) {
+      ghostToHero();
+    }
+  }
+  window.addEventListener('wheel', onEarlyWheel, { passive: true });
+  window.addEventListener('keydown', onEarlyKey);
+
+  // Attempt autoplay
+  openingVideo.muted = true;
+  const autoPlayPromise = openingVideo.play();
+  if (autoPlayPromise !== undefined) {
+    autoPlayPromise.catch(() => {
+      const hint = document.getElementById('openingHint');
+      if (hint) {
+        hint.innerHTML = '<span>Tap to play opening</span>';
+      }
+    });
+  }
+}
+
 /* ===== background images from data-img ===== */
 document.querySelectorAll('[data-img]').forEach(el => {
   el.style.backgroundImage = `url("${el.dataset.img}")`;
@@ -155,3 +291,50 @@ form.addEventListener('submit', async e => {
     status.classList.add('err');
   }
 });
+
+/* ===== GALLERY LIGHTBOX ===== */
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxClose = document.getElementById('lightboxClose');
+
+if (lightbox && lightboxImg) {
+  document.querySelectorAll('.gallery-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const src = card.dataset.full || card.querySelector('img')?.src;
+      if (src) {
+        lightboxImg.src = src;
+        lightbox.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      if (!lightbox.classList.contains('is-open')) {
+        lightboxImg.src = '';
+      }
+    }, 280);
+  }
+
+  if (lightboxClose) {
+    lightboxClose.addEventListener('click', e => {
+      e.stopPropagation();
+      closeLightbox();
+    });
+  }
+
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+      closeLightbox();
+    }
+  });
+
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
+      closeLightbox();
+    }
+  });
+}

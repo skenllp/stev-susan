@@ -8,10 +8,10 @@
 <meta property="og:description" content="Together with our families, we joyfully invite you to our wedding — 26 December 2026.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://stev-susan.vercel.app/">
-<meta property="og:image" content="https://stev-susan.vercel.app/og.jpg">
+<meta property="og:image" content="https://stev-susan.vercel.app/og.png">
 <meta property="og:image:alt" content="Steve & Susan — Save the Date 26.12.2026">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://stev-susan.vercel.app/og.jpg">
+<meta name="twitter:image" content="https://stev-susan.vercel.app/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:wght@400;500;600&family=Poppins:wght@300;400&family=Allura&family=Kristi&family=Mr+De+Haviland&display=swap" rel="stylesheet">
@@ -22,6 +22,37 @@
 
   <!-- 1. HERO -->
   <section class="hero" id="hero">
+    <!-- Opening Cover Video -->
+    <div class="opening-cover" id="openingCover" role="region" aria-label="Opening Cover Video">
+      <video class="opening-video" id="openingVideo" playsinline muted autoplay preload="auto">
+        <source src="opening.mp4" type="video/mp4">
+      </video>
+      <div class="opening-shade"></div>
+      <div class="opening-topbar">
+        <!-- <button type="button" class="opening-sound-btn is-muted" id="openingSoundBtn" aria-label="Toggle video sound" title="Toggle sound">
+          <svg class="sound-icon sound-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+          <svg class="sound-icon sound-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+        </button> -->
+        <!-- <button type="button" class="opening-skip-btn" id="openingSkipBtn" aria-label="Skip opening video">
+          <span>Skip</span>
+          <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13" aria-hidden="true">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </button> -->
+      </div>
+      <div class="opening-hint" id="openingHint">
+        <span>Tap anywhere to open</span>
+      </div>
+    </div>
+
     <div class="hero-bg" data-img="images/1.jpg"></div>
     <div class="hero-shade"></div>
     <div class="hero-inner">
@@ -34,6 +65,12 @@
         <span>Susan</span>
       </h1>
       <p class="hero-date">December 26, 2026</p>
+      <button type="button" class="hero-replay-btn" id="heroReplayBtn" aria-label="Replay opening video">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="11" height="11" aria-hidden="true">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <span>Replay Opening</span>
+      </button>
     </div>
   </section>
 
@@ -140,11 +177,64 @@
   </section>
 
   <!-- 6. GALLERY -->
-  <section class="paper gallery">
-    <figure class="torn photo reveal" data-torn><img src="images/3.jpg" alt="Steve and Susan"></figure>
-    <figure class="torn photo reveal" data-torn><img src="images/6.jpg" alt="Steve and Susan"></figure>
-    <figure class="torn photo reveal" data-torn><img src="images/7.jpg" alt="Steve and Susan"></figure>
+  <section class="gallery-section reveal" id="gallery">
+    <div class="gallery-head">
+      <h2 class="display big">Moments</h2>
+      <p class="gallery-subtitle">Captured memories of our journey</p>
+    </div>
+
+    <div class="normal-gallery">
+      <figure class="gallery-card" data-full="images/3.jpg">
+        <div class="gallery-img-wrap">
+          <img src="images/3.jpg" alt="Steve and Susan" loading="lazy">
+          <span class="gallery-zoom-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="11" y1="8" x2="11" y2="14"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </span>
+        </div>
+      </figure>
+
+      <figure class="gallery-card" data-full="images/6.jpg">
+        <div class="gallery-img-wrap">
+          <img src="images/6.jpg" alt="Steve and Susan" loading="lazy">
+          <span class="gallery-zoom-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="11" y1="8" x2="11" y2="14"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </span>
+        </div>
+      </figure>
+
+      <figure class="gallery-card" data-full="images/7.jpg">
+        <div class="gallery-img-wrap">
+          <img src="images/7.jpg" alt="Steve and Susan" loading="lazy">
+          <span class="gallery-zoom-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="11" y1="8" x2="11" y2="14"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </span>
+        </div>
+      </figure>
+    </div>
   </section>
+
+  <!-- Photo Lightbox Modal -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo preview">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close photo preview" type="button">&times;</button>
+    <div class="lightbox-content">
+      <img class="lightbox-img" id="lightboxImg" src="" alt="Enlarged photo">
+    </div>
+  </div>
 
   <!-- 7. THANK YOU -->
   <section class="paper thanks">
