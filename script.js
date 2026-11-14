@@ -25,6 +25,9 @@ if (openingCover && openingVideo) {
     if (isGhosted) return;
     isGhosted = true;
 
+    // Start the background music as the invitation opens (ignored if autoplay is blocked)
+    startBgm();
+
     // Smoothly fade out video audio if playing
     if (!openingVideo.muted && openingVideo.volume > 0) {
       if (audioFadeTimer) clearInterval(audioFadeTimer);
@@ -101,12 +104,19 @@ if (openingCover && openingVideo) {
   if (openingSkipBtn) {
     openingSkipBtn.addEventListener('click', e => {
       e.stopPropagation();
+      startBgm();
       ghostToHero();
     });
   }
 
-  // Tap anywhere on cover to ghost to hero
+  // Tap anywhere on cover: start the music, and if the autoplay was blocked,
+  // play the opening video first instead of skipping straight to the hero.
   openingCover.addEventListener('click', () => {
+    startBgm();
+    if (openingVideo.paused && !isGhosted) {
+      openingVideo.play().catch(() => {});
+      return;
+    }
     ghostToHero();
   });
 
@@ -123,6 +133,7 @@ if (openingCover && openingVideo) {
   }
   function onEarlyKey(e) {
     if (['Space', 'ArrowDown', 'PageDown', 'Enter'].includes(e.code)) {
+      startBgm();
       ghostToHero();
     }
   }
@@ -249,6 +260,24 @@ player.addEventListener('click', () => {
   if (playing) { audio.pause(); setPlaying(false); return; }
   audio.play().then(() => setPlaying(true)).catch(() => { label.firstChild.textContent = 'ADD music.mp3 TO PLAY '; });
 });
+
+// Start background music when the invitation is opened (tap/skip/keyboard).
+function startBgm() {
+  if (!audio || !audio.paused) return;
+  const p = audio.play();
+  if (p !== undefined) p.then(() => setPlaying(true)).catch(() => {});
+}
+
+// Stop the music when the tab is hidden/closed or the page is left.
+function stopBgm() {
+  if (!audio) return;
+  audio.pause();
+  setPlaying(false);
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopBgm();
+});
+window.addEventListener('pagehide', stopBgm);
 
 /* ===== scroll reveal ===== */
 const io = new IntersectionObserver(es => es.forEach(e => {
